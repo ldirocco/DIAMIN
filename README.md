@@ -1,11 +1,11 @@
 # DIAMIN
 _DIAMIN_ is a high-level software library to facilitate the development of distributed applications for the efficient analysis of large-scale molecular interaction networks.
 
-NOTE: an extended version of this documentation is included in [MANUAL.pdf]().
+NOTE: an extended version of this documentation is included in [MANUAL.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf).
 
 ## Usage
 The library runs over Apache Spark (>=2.3,https://spark.apache.org/) and requires a Java compliant virtual machine (>= 1.8). 
-It is released as a jar file, diamin-1.0.0-all.jar, and can be used to develop applications running either in Spark Local Mode or Spark Cluster Mode. Additionally, this jar file contains a sample application useful to analyze an input provided molecular interaction network using some of the functions implemented by _DIAMIN_.
+It is released as a jar file, [diamin-1.0.0-all.jar](https://github.com/ldirocco/DIAMIN/releases), and can be used to develop applications running either in Spark Local Mode or Spark Cluster Mode. Additionally, this jar file contains a sample application useful to analyze an input provided molecular interaction network using some of the functions implemented by _DIAMIN_.
 
 We refer to the following links for information about the installation of a Java compliant virtual machine, version 1.8, as required by our library:
 
@@ -31,7 +31,7 @@ where:
 
 Notice that, by default, the _DIAMIN_ sample application runs using the Spark local mode. This means that the application is run on a single machine, but uses, in parallel, all the processing cores available on that machine. Instructions on how to run this application in fully distributed environment are available at the end of this text.
 
-In the following, we report some usage examples of this application. We refer the interested reader of the _DIAMIN_ usage [manual](https://github.com/ldirocco/DIAMIN/blob/main/Manual.md) for an exhaustive list of all the functions included in the library. 
+In the following, we report some usage examples of this application. We refer the interested reader of the _DIAMIN_ usage the [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf) for an exhaustive list of all the functions included in the library. 
 
 #### Example 1
 In a Molecular Interaction Network, pivotal interactors are likely to be represented by highly connected nodes (i.e., hubs). 
@@ -70,7 +70,7 @@ The primary usage for DIAMIN is as a software library aimed to simplify the deve
 
 
 ### Example: Kleinberg dispersion computation.
-Intuitively, the Kleinberg dispersion quantifies how _not well-connected_ is the  common neighborhood of two interactors _u_ and _v_ in a Molecular Interaction Network. It takes into account both the size and the connectivity of  the common neighborhood of _u_ and _v_. In the following, we provide the Java code that implements the Kleinberg dispersion computation using the _DIAMIN_ library. A step-by-step description of the code is provided in the [Manual.pdf]().
+Intuitively, the Kleinberg dispersion quantifies how _not well-connected_ is the  common neighborhood of two interactors _u_ and _v_ in a Molecular Interaction Network. It takes into account both the size and the connectivity of  the common neighborhood of _u_ and _v_. In the following, we provide the Java code that implements the Kleinberg dispersion computation using the _DIAMIN_ library. A step-by-step description of the code is provided in the [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf).
 
   ```java
 
