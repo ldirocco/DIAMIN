@@ -1,7 +1,7 @@
 # DIAMIN
 _DIAMIN_ is a high-level software library to facilitate the development of distributed applications for the efficient analysis of large-scale molecular interaction networks.
 
-NOTE: an extended version of this documentation is included in [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf).
+NOTE: an extended version of this documentation is included in [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf) and the source code documentation is available in the [diamin_JavaDoc](https://ldirocco.github.io/javadoc/).
 
 ## Usage
 The library runs over Apache Spark (>=2.3,https://spark.apache.org/) and requires a Java compliant virtual machine (>= 1.8). 
