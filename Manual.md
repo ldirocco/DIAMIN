@@ -12,7 +12,7 @@ We refer to the following links for information about the installation of a Java
 - [JDK 8 Installation for Linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html#BJFGGEFG)
 - [JDK 8 Installation for OS X](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html#CHDBADCG)
 
-Before using the _DIAMIN_ library, make sure to add in the build path of the Java project the [diamin-1.0.0-all.jar]() and the Spark jar files. You can find the jar files of Spark, Spark-GraphX and Spark-GraphFrame on the [Maven repository]().
+Before using the _DIAMIN_ library, make sure to add in the build path of the Java project the [diamin-1.0.0-all.jar](https://github.com/ldirocco/DIAMIN/releases) and the Spark jar files. You can find the jar files of Spark, Spark-GraphX and Spark-GraphFrame on the [Maven repository](https://mvnrepository.com/).
 
 ## A deep dive into the library
 _DIAMIN_ has been implemented as a collection of Java classes. The goal to make the analysis of large-scale biological networks on distributed systems easier for users not particularly skilled in Spark. For this reason, _DIAMIN_ provides a high-level representation of a distributed MIN. This strategy avoids the users to directly work with distributed data structures and/or project map-reduce routines. Indeed through this library a MIN can be built and explored through object, conceived as a sort of black box that contains methods implementing the a series of algorithms on the MIN of interest. The library contains two main classes: _BioGraph_ and _IOmanager_. _DIAMIN_ suggests  an underlying workflow that simplifies the analysis even further and follows these steps:
@@ -370,7 +370,7 @@ The primary usage for DIAMIN is as a software library aimed to simplify the deve
 Intuitively, the Kleinberg dispersion quantifies how _not well-connected_ is the  common neighborhood of two interactors _u_ and _v_ in a Molecular Interaction Network. It takes into account both the size and the connectivity of  the common neighborhood of _u_ and _v_. Take into account  the human protein-to-protein network provided by the Intact database. In the following, we provide a step-by-step description of the Java code that implements the Kleinberg dispersion computation between the proteins uniprotkb:P04637 and uniprotkb:P06422 using the _DIAMIN_ library. 
 
 #### STEP 0:
-Make sure to add the [diamin-1.0.0-all.jar]() in the build path of your Java project and, then, import the _DIAMIN_ library. 
+Make sure to add the [diamin-1.0.0-all.jar](https://github.com/ldirocco/DIAMIN/releases) in the build path of your Java project and, then, import the _DIAMIN_ library. 
 
   ```java
 
@@ -396,7 +396,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
     public static void main(String[] args) {
-        #STEP 1
+        //STEP 1
         SparkConf sc = new SparkConf().setAppName("DIAMIN").setMaster("local[8]");
         sc.set("spark.local.dir", "tmp");
         sc.set("spark.executor.memory", "2g");
@@ -418,13 +418,13 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
     public static void main(String[] args) {
-        #STEP 1:
+        //STEP 1:
         SparkConf sc = new SparkConf().setAppName("DIAMIN").setMaster("local[8]");
         sc.set("spark.local.dir", "tmp");
         sc.set("spark.executor.memory", "2g");
         JavaSparkContext jsc = new JavaSparkContext(sc);
         
-        #STEP 2: 
+        //STEP 2: 
         String interactors="uniprotkb:P04637,uniprotkb:P06422";
         String input_path="intact_graph.txt";
         BIOgraph MIN=IOmanager.importFromtxt(input_path,jsc);
@@ -444,18 +444,18 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
     public static void main(String[] args) {
-        #STEP 1:
+        //STEP 1:
         SparkConf sc = new SparkConf().setAppName("DIAMIN").setMaster("local[8]");
         sc.set("spark.local.dir", "tmp");
         sc.set("spark.executor.memory", "2g");
         JavaSparkContext jsc = new JavaSparkContext(sc);
         
-        #STEP 2: 
+        //STEP 2: 
         String interactors="uniprotkb:P04637,uniprotkb:P06422";
         String input_path="intact_graph.txt";
         BIOgraph MIN=IOmanager.importFromtxt(input_path,jsc);
         
-        #STEP3: 
+        //STEP3: 
         String[] C_uv=MIN.xNeighbors(interactors,1);
         
     }
@@ -475,21 +475,21 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
     public static void main(String[] args) {
-        #STEP 1:
+        //STEP 1:
         SparkConf sc = new SparkConf().setAppName("DIAMIN").setMaster("local[8]");
         sc.set("spark.local.dir", "tmp");
         sc.set("spark.executor.memory", "2g");
         JavaSparkContext jsc = new JavaSparkContext(sc);
         
-        #STEP 2: 
+        //STEP 2: 
         String interactors="uniprotkb:P04637,uniprotkb:P06422";
         String input_path="intact_graph.txt";
         BIOgraph MIN=IOmanager.importFromtxt(input_path,jsc);
         
-        #STEP3: 
+        //STEP3: 
         String[] C_uv=MIN.xNeighbors(interactors,1);
         
-        #STEP 4:
+        //STEP 4:
         BIOgraph C_u=MIN.xSubgraph("uniprotkb:P04637");
         
     }
