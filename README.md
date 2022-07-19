@@ -1,7 +1,7 @@
 # DIAMIN
 _DIAMIN_ is a high-level software library to facilitate the development of distributed applications for the efficient analysis of large-scale molecular interaction networks.
 
-NOTE: an extended version of this documentation is included in [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf) and the source code documentation is available in the [diamin_JavaDoc](https://ldirocco.github.io/javadoc/).
+NOTE: an extended version of this documentation is included in [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf). A reference guide to the classes of our library is available in the [JavaDoc format](https://ldirocco.github.io/javadoc/).
 
 ## Usage
 The library runs over Apache Spark (>=2.3,https://spark.apache.org/) and requires a Java compliant virtual machine (>= 1.8). 
@@ -69,8 +69,8 @@ Notice that, in this case, the application is run using the *spark-submit* comma
 The primary usage for DIAMIN is as a software library aimed to simplify the development of distributed applications for the efficient analysis of large-scale molecular interaction networks. In the following we describe the example of the development of a Java application for the evaluation of the Kleinberg dispersion measure on an input molecular network. 
 
 
-### Example: Kleinberg dispersion computation.
-Intuitively, the Kleinberg dispersion quantifies how _not well-connected_ is the  common neighborhood of two interactors _u_ and _v_ in a Molecular Interaction Network. It takes into account both the size and the connectivity of  the common neighborhood of _u_ and _v_. In the following, we provide the Java code that implements the Kleinberg dispersion computation using the _DIAMIN_ library. A step-by-step description of the code is provided in the [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf).
+### Example 3: Kleinberg dispersion computation.
+Intuitively, the Kleinberg dispersion quantifies how _not well-connected_ is the  common neighborhood of two interactors _u_ and _v_ in a Molecular Interaction Network. It takes into account both the size and the connectivity of  the common neighborhood of _u_ and _v_. In the following, we provide the Java code that implements the Kleinberg dispersion computation using the _DIAMIN_ library. The provided code starts from a graph initially stored on disk as a text file and evaluates the Kleinberg dispersion, with respect to two interactors, as reported by the *interactors*. The result is saved in the *kleinberg_dispersion* variable and, then, printed on screen. A step-by-step description of the code is provided in the [Manual.pdf](https://github.com/ldirocco/DIAMIN/blob/master/Manual.pdf).
 
   ```java
 
@@ -80,20 +80,20 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 public class Main {
     public static void main(String[] args) {
-        SparkConf sc = new SparkConf().setAppName("DIAMIN").setMaster("local[8]");
-        sc.set("spark.local.dir", "tmp");
-        sc.set("spark.executor.memory", "2g");
+        SparkConf sc = new SparkConf().setAppName("Kleinberg").setMaster("local[*]");
         JavaSparkContext jsc = new JavaSparkContext(sc);
 
-        String interactors="uniprotkb:P04637,uniprotkb:P06422";
         String input_path="intact_graph.txt";
-        BIOgraph MIN=IOmanager.importFromtxt(input_path,jsc);
-        String[] C_uv=MIN.xNeighbors(interactors,1);
+        BIOgraph MIN=IOmanager.importFromTxt(input_path,jsc);
+
+        String interactors="uniprotkb:P04637,uniprotkb:P06422";
+        String[] C_uv=MIN.xNeighbors(interactors, 1);
         BIOgraph C_u=MIN.xSubgraph("uniprotkb:P04637");
+
         int kleinberg_dispersion=0;
         for(String s:C_uv){
           for(String t:C_uv){
-            int n_neighbors=C_u.xNeighbors(s+","+t,2).length;
+            int n_neighbors=C_u.xNeighbors(s+","+t, 2).length;
             if(n_neighbors>0){kleinberg_dispersion+=1;}
            }
         }
