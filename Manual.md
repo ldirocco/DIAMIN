@@ -1,6 +1,6 @@
 # DIAMIN
 
-_DIAMIN_ is a specialized library of classes and functions to be used for analyzing, by means of a distributed approach, Molecular Interaction Network (_MIN_). Dince the size of the modern dataset is very large and the time requirements for their analysis are very strict, _DIAMIN_ proposes solutions designed to run on a distributed system  and based on the MapReduce paradigm. The main goal of this library is to enable efficient distributed analysis of large molecular interaction networks, both for users with programming skills  and for data analysts . In both cases, the user does not need any special knowledge of distributed computing to fully utilise the features provided by the library. Instead, it is the library provided that takes care of the various problems that arise when working in a distributed environment. _DIAMIN_ assumes as reference implementation for the MapReduce paradigm the Apache Spark framework for distributed Big Data processing. 
+_DIAMIN_ is a specialized library of classes and functions to be used for analyzing, by means of a distributed approach, Molecular Interaction Network (_MIN_). The main goal of this library is to enable efficient distributed analysis of large molecular interaction networks, both for users with programming skills  and for data analysts . In both cases, the user does not need any special knowledge of distributed computing to fully utilise the features provided by the library. Instead, it is the library provided that takes care of the various problems that arise when working in a distributed environment. _DIAMIN_ assumes as reference implementation for the MapReduce paradigm the Apache Spark framework for distributed Big Data processing. 
 
 ## Usage
 The library runs over Apache Spark (>=2.3,https://spark.apache.org/) and requires a Java compliant virtual machine (>= 1.8). 
@@ -12,19 +12,28 @@ We refer to the following links for information about the installation of a Java
 - [JDK 8 Installation for Linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html#BJFGGEFG)
 - [JDK 8 Installation for OS X](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html#CHDBADCG)
 
-Before using the _DIAMIN_ library, make sure to add in the build path of the Java project the [diamin-1.0.0-all.jar](https://github.com/ldirocco/DIAMIN/releases) and the Spark jar files. You can find the jar files of Spark, Spark-GraphX and Spark-GraphFrame on the [Maven repository](https://mvnrepository.com/).
+Before using the _DIAMIN_ library in a Java project, make sure to add to the build path of that project the [diamin-1.0.0-all.jar](https://github.com/ldirocco/DIAMIN/releases) and the Spark jar files. You can find the jar files of Spark, including those related to the GraphX and the  GraphFrame packages, on the [Maven repository](https://mvnrepository.com/). For a quick start, use the following links to download version 3.boh of the Spark jar files used during the DIAMIN development:
+- [Spark core](https://repo1.maven.org/maven2/org/apache/spark/spark-core_2.13/3.3.0/spark-core_2.13-3.3.0.jar)
+- [JDK 8 Installation for Linux](https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jdk.html#BJFGGEFG)
+- [JDK 8 Installation for OS X](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html#CHDBADCG)
+
 
 ## A deep dive into the library
-_DIAMIN_ has been implemented as a collection of Java classes. The goal to make the analysis of large-scale biological networks on distributed systems easier for users not particularly skilled in Spark. For this reason, _DIAMIN_ provides a high-level representation of a distributed MIN. This strategy avoids the users to directly work with distributed data structures and/or project map-reduce routines. Indeed through this library a MIN can be built and explored through object, conceived as a sort of black box that contains methods implementing the a series of algorithms on the MIN of interest. The library contains two main classes: _BioGraph_ and _IOmanager_. _DIAMIN_ suggests  an underlying workflow that simplifies the analysis even further and follows these steps:
-- import in a Java application a MIN from an external source through the methods of the IOmanager class;
-- use  the function implemented in the methods of the _BioGraph_ class to  develop distributed applications for the efficient analysis of large-scale MIN;
-- export the results toward external sources through through the methods of the IOmanager class.
+_DIAMIN_ has been implemented as a collection of Java classes. The goal is to make the analysis of large-scale biological networks on distributed systems easier for users without distributed programming skills. For this reason, _DIAMIN_ provides a high-level representation of a distributed MIN. This strategy avoids the users to directly work with distributed data structures and/or develop distributed algorithms. Indeed, using this library a MIN can be built and analyzed according to an Object-Oriented approach. In a few words, the library provides the developer with a sort of black box enclosing a distributed repreentation of a MIN and containing a set of methods useful for analyzing and exploring the underlying  MIN in a distributed way. The library contains two main classes: _BioGraph_ and _IOmanager_. 
+
+Assuming a Spark installation is available and ready to use, the typical workflow of an application developed using _DIAMIN_ is made of the follow these steps:
+- import in a Java application a MIN from an external source, using the methods of the _IOmanager_ class;
+- use one or more of the methods available in _BioGraph_ to perform the analysis of interest or to develop a target application;
+- export the results toward external sources using the methods of _IOmanager_.
+
+
 In the following, we describe the two previously mentioned core classes.
 
 ### The IOmanager class
-This Java class keeps a collection of static methods that can be invoked to manage the import/export of MIN from/to external sources, without the initialization of a new IOmanager object in the application. Indeed, it is likely that a network to be processed is not initially stored in a format ready to be analyzed using a distributed approach. In many cases, these networks are just described as graphs encoded using structured text files. Here the problem is just to load the network from a file and instantiate it as a distributed data structure. 
+It keeps a collection of static methods that can be invoked to manage the import/export of MIN from/to external sources. 
+Indeed, it is likely that a network to be processed is not initially stored in a format ready to be analyzed using a distributed approach. In many cases, these networks are just described as graphs encoded using structured text files. Here the problem is just to load the network from a file and instantiate it as a distributed data structure. 
 
-We also consider another case, less frequent but more interesting, where the network is initially stored in a Neo4j instance. Working with Neo4j requires to leverage on the cypher query language to acquire a complete description of the  network to be analyzed in a distributed environment. Conversely, it may be required to store the network resulting from an analysis on a device external to the distributed system, so as to allow to process it by means of other tools. Even in this case, we implement functions to write a biological network to a MongoDB/Neo4j instance or just to a .txt file.
+We also consider another case, less frequent but more interesting, where the network is initially stored in a Neo4j instance. Working with Neo4j requires to leverage on the cypher query language to acquire a complete description of the  network to be analyzed in a distributed environment. Conversely, it may be required to store the network resulting from an analysis on a device external to the distributed system, so as to allow to process it by means of other tools. Even in this case, we implement functions to write a biological network to a Neo4j instance or just to a .txt file.
 
 In the following, we provide a brief description of the methods of the IOmanager class.
 
